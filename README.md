@@ -1,30 +1,173 @@
 # ✅ Problem Statement 1 (PS1)
-## CI/CD Deployment Strategy
 
-This project uses GitHub Actions for Continuous Integration (CI):
+## 1. Objective
 
-- On every push to main:
-  - Docker image is built
-  - Image is pushed to Docker Hub
+The objective of this project is to **containerize and deploy the Wisecow application** on a Kubernetes environment (Docker Desktop / Minikube / Kind) with:
 
-### Why Continuous Deployment is not automated to Kubernetes?
+* Automated **CI/CD using GitHub Actions**
+* Secure **TLS-based access** using Kubernetes Ingress
+* Optional **Zero-Trust Runtime Security** using KubeArmor
 
-The Kubernetes cluster used in this project is a local Docker Desktop cluster.
-GitHub-hosted runners do not have network access to local Kubernetes environments.
+This repository demonstrates real-world DevOps practices including Dockerization, Kubernetes deployment, CI/CD automation, ingress-based TLS, and runtime security enforcement.
 
-In real-world production, Continuous Deployment would be achieved by:
-- Deploying to a cloud-based Kubernetes cluster (EKS/GKE/AKS), or
-- Using a self-hosted GitHub Actions runner inside the cluster, or
-- Using GitOps tools like ArgoCD or FluxCD.
+---
 
-For this assessment:
-- Kubernetes manifests are provided
-- Deployment is applied manually using kubectl
-- CI/CD design and understanding are demonstrated
+---
+
+## 2. Dockerization
+
+### 2.1 Dockerfile
+
+The Wisecow application is packaged using a Dockerfile.
+
+**Key points:**
+
+* Lightweight base image
+* Exposes application port
+* Runs Wisecow startup script
+
+**Build locally:**
+
+```bash
+docker build -t wisecow:2.0 .
+```
+
+**Run locally:**
+
+```bash
+docker run -p 4499:4499 wisecow:2.0
+```
+
+---
+
+## 4. Kubernetes Deployment
+
+### 4.1 Deployment
+
+* Runs 2 replicas of Wisecow
+* Uses Docker Hub image `usernam/wisecow:2.0`
+
+```bash
+kubectl apply -f k8s/deployment.yaml
+```
+
+### 4.2 Service
+
+* Exposes Wisecow internally and via NodePort
+
+```bash
+kubectl apply -f k8s/service.yaml
+```
+
+Verify:
+
+```bash
+kubectl get pods
+kubectl get svc
+```
+
+---
+
+## 5. Ingress & TLS Configuration
+
+### 5.1 Ingress Controller
+
+NGINX Ingress Controller is installed in the cluster.
+
+```bash
+kubectl get pods -n ingress-nginx
+```
+
+### 5.2 TLS Setup
+
+* Self-signed certificate generated
+* Stored as Kubernetes TLS secret
+* Ingress configured for HTTPS
+
+```bash
+kubectl create secret tls wisecow-tls \
+--cert=tls/tls.crt \
+--key=tls/tls.key
+
+kubectl get secret wisecow-tls
+
+kubectl apply -f k8s/ingress.yaml
+```
+
+### 5.3 Host Mapping
+
+Add entry to `/etc/hosts`:
+
+```text
+127.0.0.1 wisecow.local
+```
+
+Access:
+
+```
+https://wisecow.local
+```
+
+---
+
+## 6. CI/CD with GitHub Actions
+
+### 6.1 Continuous Integration (CI)
+
+GitHub Actions workflow performs:
+
+* Checkout code
+* Build Docker image
+* Push image to Docker Hub
+
+Triggered on:
+
+```yaml
+on:
+  push:
+    branches: ["main"]
+```
+
+### 6.2 Continuous Deployment (CD) – Challenge Goal
+
+> ⚠️ **Important Note**
+
+GitHub Actions **cannot directly deploy to a local Kubernetes cluster** (Docker Desktop / Minikube) because it runs in GitHub-hosted runners.
+
+**CD is possible only when:**
+
+* Kubernetes cluster is hosted on EC2 / Cloud VM
+* `kubeconfig` is securely added as GitHub Secret
+
+In this project:
+
+* CI is fully automated
+* Deployment is applied manually to local cluster
+
+This behavior is **expected and correct** for a local setup.
+
+---
 
 
+---
 
+## 7. Expected Artifacts (Completed)
 
+✔ Wisecow application source code
+✔ Dockerfile
+✔ Kubernetes manifests (Deployment, Service, Ingress)
+✔ GitHub Actions CI workflow
+✔ TLS-secured access
+
+---
+
+## 8. End Goal Status
+
+✅ Application containerized
+✅ Deployed to Kubernetes
+✅ Exposed securely via HTTPS
+✅ CI pipeline automated
+✅ Security controls enforced
 
 
 
