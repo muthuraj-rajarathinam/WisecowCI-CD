@@ -1,0 +1,23 @@
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorPolicy
+metadata:
+  name: wisecow-zero-trust
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: wisecow
+
+  file:
+    severity: 5
+    message: "File access denied by zero-trust policy"
+    action: Block
+    matchPaths:
+    - path: /etc/passwd
+
+  process:
+    severity: 5
+    message: "Process execution denied by zero-trust policy"
+    action: Block
+    matchPaths:
+    - path: /bin/sh
