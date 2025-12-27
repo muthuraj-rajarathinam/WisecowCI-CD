@@ -97,6 +97,10 @@ kubectl apply -f k8s/ingress.yaml
 ### 5.3 Host Mapping
 
 Add entry to `/etc/hosts`:
+```
+sudo nano /etc/hosts
+entry at last 127.0.0.1    wisecow.local
+```
 
 ```text
 127.0.0.1 wisecow.local
