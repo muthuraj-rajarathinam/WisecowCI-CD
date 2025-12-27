@@ -358,7 +358,3 @@ karmor logs --namespace default
 * [x] Logs captured using karmor
 
 ---
-
-
-
-**Muthu RajCloud / DevOps / Kubernetes Security Learner
