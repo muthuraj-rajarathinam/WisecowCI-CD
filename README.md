@@ -40,9 +40,9 @@ docker run -p 4499:4499 wisecow:2.0
 
 ---
 
-## 4. Kubernetes Deployment
+## 3. Kubernetes Deployment
 
-### 4.1 Deployment
+### 3.1 Deployment
 
 * Runs 2 replicas of Wisecow
 * Uses Docker Hub image `usernam/wisecow:2.0`
@@ -51,7 +51,7 @@ docker run -p 4499:4499 wisecow:2.0
 kubectl apply -f k8s/deployment.yaml
 ```
 
-### 4.2 Service
+### 3.2 Service
 
 * Exposes Wisecow internally and via NodePort
 
@@ -68,9 +68,9 @@ kubectl get svc
 
 ---
 
-## 5. Ingress & TLS Configuration
+## 4. Ingress & TLS Configuration
 
-### 5.1 Ingress Controller
+### 4.1 Ingress Controller
 
 NGINX Ingress Controller is installed in the cluster.
 
@@ -78,7 +78,7 @@ NGINX Ingress Controller is installed in the cluster.
 kubectl get pods -n ingress-nginx
 ```
 
-### 5.2 TLS Setup
+### 4.2 TLS Setup
 
 * Self-signed certificate generated
 * Stored as Kubernetes TLS secret
@@ -94,7 +94,7 @@ kubectl get secret wisecow-tls
 kubectl apply -f k8s/ingress.yaml
 ```
 
-### 5.3 Host Mapping
+### 4.3 Host Mapping
 
 Add entry to `/etc/hosts`:
 ```
@@ -114,9 +114,9 @@ https://wisecow.local
 
 ---
 
-## 6. CI/CD with GitHub Actions
+## 5. CI/CD with GitHub Actions
 
-### 6.1 Continuous Integration (CI)
+### 5.1 Continuous Integration (CI)
 
 GitHub Actions workflow performs:
 
@@ -132,7 +132,7 @@ on:
     branches: ["main"]
 ```
 
-### 6.2 Continuous Deployment (CD) – Challenge Goal
+### 5.2 Continuous Deployment (CD) – Challenge Goal
 
 > ⚠️ **Important Note**
 
@@ -155,7 +155,7 @@ This behavior is **expected and correct** for a local setup.
 
 ---
 
-## 7. Expected Artifacts (Completed)
+## 6. Expected Artifacts (Completed)
 
 ✔ Wisecow application source code
 ✔ Dockerfile
@@ -165,7 +165,7 @@ This behavior is **expected and correct** for a local setup.
 
 ---
 
-## 8. End Goal Status
+## 7. End Goal Status
 
 ✅ Application containerized
 ✅ Deployed to Kubernetes
@@ -359,7 +359,6 @@ karmor logs --namespace default
 
 ---
 
-### Author
 
-**Muthu Raj**
-Cloud / DevOps / Kubernetes Security Learner
+
+**Muthu RajCloud / DevOps / Kubernetes Security Learner
