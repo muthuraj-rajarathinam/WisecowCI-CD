@@ -174,6 +174,89 @@ This behavior is **expected and correct** for a local setup.
 ✅ Security controls enforced
 
 
+# ✅ Problem Statement 2 (PS2)
+
+This problem demonstrates basic system automation and monitoring skills using scripting (Bash).
+Two objectives were selected and implemented to showcase real-world DevOps/Linux operational tasks.
+
+---
+
+## Selected Objectives
+
+### ✅ 1. System Health Monitoring Script
+
+### ✅ 2. Application Health Checker
+
+---
+
+## 1. System Health Monitoring Script
+
+### Objective
+
+Monitor the health of a Linux system and alert when system resources exceed predefined thresholds.
+
+### What the Script Checks
+
+* **CPU Usage** (Alert if > 80%)
+* **Memory Usage** (Alert if > 80%)
+* **Disk Usage** (Alert if > 80%)
+* **Running Processes** (basic count / top consumers)
+
+### How It Works
+
+* Collects system metrics using standard Linux commands.
+* Compares current usage against threshold values.
+* Prints alerts to the console (can be redirected to a log file).
+
+### Execution
+
+```bash
+bash system_health.sh
+```
+
+### Output
+
+* Displays current CPU, memory, and disk usage.
+* Shows warning messages if any threshold is crossed.
+
+---
+
+## 2. Application Health Checker
+
+### Objective
+
+Check whether an application is **UP or DOWN** by validating HTTP response status codes.
+
+### What the Script Checks
+
+* Sends an HTTP request to the application URL.
+* Verifies the returned **HTTP status code**.
+* Determines application availability.
+
+### Health Logic
+
+| Status Code          | Result                  |
+| -------------------- | ----------------------- |
+| 200–299              | Application is **UP**   |
+| Others / No response | Application is **DOWN** |
+
+### Execution
+
+```bash
+bash app_health_check.sh
+```
+
+### Output
+
+* Clearly indicates whether the application is **UP** or **DOWN**.
+* Prints HTTP status code for troubleshooting.
+
+---
+
+
+
+
+
 
 # ✅ Problem Statement 3 (PS3)
 
